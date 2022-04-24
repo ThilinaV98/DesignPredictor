@@ -17,8 +17,12 @@ except:
 @app.route("/users", methods=["POST"])
 def create_user():
     try:
-        user = {"name": request.form["name"], "lastname": request.form["lastName"]}
-        #user = {"name": "A", "lastname": "BB"}
+        user = {"username": request.form["username"], 
+                "password": request.form["password"],
+                "email": request.form["email"],
+                "department": request.form["department"],
+                "position": request.form["position"],
+                }
         dbResponse = db.users.insert_one(user)
         return Response(response=json.dumps({
             "message": "user created",
@@ -32,4 +36,4 @@ def create_user():
 
 
 if __name__ == "__main__":
-    app.run(port=80, debug=True)
+    app.run(port=5000, debug=True)
