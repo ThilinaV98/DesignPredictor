@@ -2,10 +2,11 @@ from flask import Flask, Response, request, jsonify
 import pymongo
 import json
 from bson.objectid import ObjectId
-from DataModel import DataModel
+#UNCOMMENT THESE FILES WHEN DATAMODEL IS WORKING PROPERLY
+# from ML.DataModel import DataModel
 
 app = Flask(__name__)
-app.register_blueprint(DataModel,url_prefix="/ml")
+# app.register_blueprint(DataModel,url_prefix="/ml")
 
 try:
     mongo = pymongo.MongoClient(host="localhost",
