@@ -2,6 +2,17 @@ from flask import Flask, Response, request, jsonify
 import pymongo
 import json
 from bson.objectid import ObjectId
+import numpy as np
+# import cv2
+# from sklearn.model_selection import train_test_split
+# from sklearn.neighbors import KNeighborsClassifier
+# from sklearn.metrics import accuracy_score
+# from sklearn.metrics import classification_report
+# import joblib
+# from matplotlib import pyplot as plt
+
+
+
 #UNCOMMENT THESE FILES WHEN DATAMODEL IS WORKING PROPERLY
 # from ML.DataModel import DataModel
 

@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template, Flask
+from flask import Blueprint, current_app,render_template, Flask
 import os
 import numpy as np
 import cv2
@@ -12,22 +12,26 @@ import random
 import glob
 import os
 
+
 DataModel=Blueprint('DataModel',__name__,static_folder='static',template_folder='template')
+DataSet=os.path.join(current_app.root_path, 'ML\\Dataset');
+data_path=DataSet
 
 @DataModel.route("/DataModel")
 def DataModelling():
-    DataSetCreation()
-    return
+    DataSetCreation();
+    DataTraining();
+    return "DataModelling is Copleted!"
 
 
 def DataSetCreation():
-    data_path='DataSet'
+    
     categories=os.listdir(data_path)
-    print(categories)
+    # print(categories)
     labels=[i for i in range(len(categories))]
-    print(labels)
-    category_dict={'Design 1':0,'Design 2':1,'Design 3':2}
-    print(category_dict)
+    # print(labels)
+    category_dict={'Design1':0,'Design2':1,'Design3':2}
+    # print(category_dict)
 
     data=[]
     target=[]
@@ -70,9 +74,9 @@ def DataTraining():
 
     clsfr=joblib.load('T-shirt-knn.sav')
 
-    label_dict={0:'Design 1',1:'Design 2',2:'Design 3'}
+    label_dict={0:'Design1',1:'Design2',2:'Design3'}
 
-    img = cv2.imread('DataSet/Design 1/47.jpeg')
+    img = cv2.imread(DataSet+'/Design1/47.jpeg')
     img = cv2.resize(img,(720,720))
 
     img_in=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) #converting into a gray image
@@ -88,7 +92,7 @@ def DataTraining():
     key = cv2.waitKey(0)
 
     if label == 'Design 1' :
-        images = glob.glob(r"C:\Users\Thilina Vithana\Desktop\Design Predictor\Dataset\Design 1/*.jpeg")
+        images = glob.glob(r'C:\Users\Thilina Vithana\Desktop\Design Predictor\"+Dataset+"\Design1/*.jpeg')
         random_image1_1 = random.choice(images)
         random_image1 = cv2.imread(random_image1_1)
         random_image2_2 = random.choice(images)
@@ -111,7 +115,7 @@ def DataTraining():
         key = cv2.waitKey(0)
 
     if label == 'Design 2' :
-        images = glob.glob(r"C:\Users\Thilina Vithana\Desktop\Design Predictor\Dataset\Design 2/*.jpeg")
+        images = glob.glob(r'C:\Users\Thilina Vithana\Desktop\Design Predictor\"+Dataset+"\Design2/*.jpeg')
         random_image1_1 = random.choice(images)
         random_image1 = cv2.imread(random_image1_1)
         random_image2_2 = random.choice(images)
@@ -134,7 +138,7 @@ def DataTraining():
         key = cv2.waitKey(0)
 
     if label == 'Design 3' :
-        images = glob.glob(r"C:\Users\Thilina Vithana\Desktop\Design Predictor\Dataset\Design 3/*.jpeg")
+        images = glob.glob(r'C:\Users\Thilina Vithana\Desktop\Design Predictor\"+Dataset+"\Design3/*.jpeg')
         random_image1_1 = random.choice(images)
         random_image1 = cv2.imread(random_image1_1)
         random_image2_2 = random.choice(images)
