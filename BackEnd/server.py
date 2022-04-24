@@ -1,8 +1,11 @@
-from flask import Flask, Response, request
+from flask import Flask, Response, request, jsonify
 import pymongo
 import json
+from bson.objectid import ObjectId
+from DataModel import DataModel
 
 app = Flask(__name__)
+app.register_blueprint(DataModel,url_prefix="/ml")
 
 try:
     mongo = pymongo.MongoClient(host="localhost",
@@ -14,18 +17,64 @@ except:
     print("Error - Cannot connecrt to the db ")
 
 
-@app.route("/users", methods=["POST"])
+@app.route("/users", methods=["POST","GET"])
 def create_user():
+
+###############################################################################
+# User data Add 
+################################################################################
+    if request.method == "POST":
+        try:
+            # user = {"username": request.form["username"], 
+            #         "password": request.form["password"],
+            #         "email": request.form["email"],
+            #         "department": request.form["department"],
+            #         "position": request.form["position"],
+            #         }
+            data = request.get_json()
+            dbResponse = db.users.insert_one(data)
+            return Response(response=json.dumps({
+                "message": "user created",
+                "id": f"{dbResponse.inserted_id}"
+            }),
+                            status=200,
+                            mimetype="application/json")
+
+        except Exception as ex:
+            print(ex)
+###############################################################################
+# User data Retrive 
+################################################################################
+    if request.method == "GET":
+        try:
+            data = list(db.users.find())
+            for user in data:
+                user["_id"] = str(user["_id"])
+            return Response(response=json.dumps(data),
+                            status=200,
+                            mimetype="application/json")
+
+        except Exception as ex:
+            print(ex)
+            return Response(response=json.dumps({"message": "Cannot read users"}), status=500, mimetype="application/json")
+
+@app.route("/products", methods=["POST"])
+def add_products():
+
+###############################################################################
+# Product data Add 
+################################################################################
     try:
-        user = {"username": request.form["username"], 
-                "password": request.form["password"],
-                "email": request.form["email"],
-                "department": request.form["department"],
-                "position": request.form["position"],
-                }
-        dbResponse = db.users.insert_one(user)
+        # user = {"username": request.form["username"], 
+        #         "password": request.form["password"],
+        #         "email": request.form["email"],
+        #         "department": request.form["department"],
+        #         "position": request.form["position"],
+        #         }
+        data = request.get_json()
+        dbResponse = db.products.insert_one(data)
         return Response(response=json.dumps({
-            "message": "user created",
+            "message": "Products added",
             "id": f"{dbResponse.inserted_id}"
         }),
                         status=200,
@@ -33,6 +82,7 @@ def create_user():
 
     except Exception as ex:
         print(ex)
+
 
 
 if __name__ == "__main__":

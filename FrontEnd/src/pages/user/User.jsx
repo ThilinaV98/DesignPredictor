@@ -1,9 +1,18 @@
 import "./user.css";
+import axios from 'axios';
 
 function handleSubmit(e) {
   e.preventDefault();
-  const { username, password } = e.target.elements;
-  console.log({ username: username.value, password: password.value });
+  const { username, password, email, department, position} = e.target.elements;
+  console.log({ username: username.value, password: password.value, email: email.value, department: department.value, position: position.value });
+  axios.post('http://localhost:5000/users', {
+    "username": username.value,
+    "password": password.value,
+    "email": email.value,
+    "department": department.value,
+    "position": position.value
+
+  })
 }
 
 export default function User() {
@@ -12,7 +21,7 @@ export default function User() {
       <div className="userTitleContainer">Update User</div>
       <div className="userUpdate">
         <span className="userUpdateTitle">Edit Details</span>
-        <form className="userUpdateForm" onSubmit={handleSubmit}>
+        <form className="userUpdateForm" onSubmit={handleSubmit} action="POST">
           <div className="userUpdateLeft">
             <div className="userUpdateItem">
               <label>Username</label>
@@ -62,7 +71,7 @@ export default function User() {
           </div>
           <div className="userUpdateRight">
             <div className="userUpdateItem"></div>
-            <button className="userUpdateButton">Update</button>
+            <button type="submit" className="userUpdateButton">Add User</button>
           </div>
         </form>
       </div>
