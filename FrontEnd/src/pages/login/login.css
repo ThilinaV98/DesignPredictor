@@ -1,0 +1,64 @@
+.login {
+    flex: 4;
+    padding: 20px;
+  }
+  
+  .loginUserTitleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 34px;
+  }
+  
+  .loginUser {
+    margin-top: 20px;
+    flex: 1;
+    padding: 20px;
+    -webkit-box-shadow: 2px 1px 5px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 1px 5px 0px rgba(0, 0, 0, 0.5);
+  }
+  .loginUserTitle {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  .loginUsereForm {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .loginUserItem{
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+  }
+  
+  .loginUserItem>label{
+      margin-bottom: 5px;
+      font-size: 14px;
+  }
+  
+  .loginUserInputs{
+      border: none;
+      width: 250px;
+      height: 30px;
+      border-bottom: 1px solid gray;
+  }
+  
+  .loginUserRight{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  
+  .loginUserButton{
+      border-radius: 5px;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      background-color: blue;
+      color: white;
+      font-weight: 600;
+  }

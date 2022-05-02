@@ -24,9 +24,9 @@ export default function UserList() {
   return (
     <div className="userList">
       <div className="userListContainer">
-        <h3 className="userListTitle">Prodcuts</h3>
-        <Link to="/newProduct">
-          <button className="userListButton">Add Product</button>
+        <h3 className="userListTitle">Users</h3>
+        <Link to="/user">
+          <button className="userListButton">Add Users</button>
         </Link>
       </div>
       <DataGrid
@@ -35,7 +35,7 @@ export default function UserList() {
         columns={columns}
         pageSize={rows.length}
         rowsPerPageOptions={[rows.length]}
-        checkboxSelection
+        // checkboxSelection
       />
     </div>
   );

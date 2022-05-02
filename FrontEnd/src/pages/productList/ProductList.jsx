@@ -1,26 +1,25 @@
+import React, { useEffect, useState } from "react";
 import "./productList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 
 const columns = [
+  // { field: "_id", headerName: "ID", width: 70 },
   { field: "id", headerName: "ID", width: 70 },
-  { field: "username", headerName: "User name", width: 130 },
-  { field: "email", headerName: "Email", width: 130 },
-  { field: "department", headerName: "Department", width: 130 },
-  { field: "postition", headerName: "Postition", width: 130 },
+  { field: "quantity", headerName: "Quantity", width: 130 },
+  { field: "price", headerName: "Price", width: 130 },
+  { field: "img", headerName: "Image", width: 130 },
 ];
 
-const rows = [
-  {
-    id: 1,
-    username: "Thilina Vithana",
-    email: "thilinavithana98@gmail.com",
-    department: "Design",
-    postition: "Fashion Designer",
-  },
-];
-
-export default function ProductList() {
+export default function ProductList(){
+  let [rows, setRows] = useState({});
+  useEffect(() => {
+    fetch(`http://localhost:5000/products`)
+      .then((res) => res.json())
+      .then((result) => {
+        setRows(result);
+      });
+  });
   return (
     <div className="productList">
       <div className="productListContainer">
@@ -30,11 +29,12 @@ export default function ProductList() {
         </Link>
       </div>
       <DataGrid
+        getRowId={(row) => row._id}
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
+        pageSize={rows.length}
+        rowsPerPageOptions={[rows.length]}
+        // checkboxSelection
       />
     </div>
   );

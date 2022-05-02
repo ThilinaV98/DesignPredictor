@@ -6,12 +6,12 @@ import Home from "./pages/home/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import User from "./pages/user/User";
 import ProductList from "./pages/productList/ProductList";
-import ImageUpload from "./pages/uploadlimage/UploadImage";
+import UploadImage from "./pages/uploadlimage/UploadImage"
 import NewProduct from "./pages/newProduct/NewProduct"
 
 function App() {
   return (
-    <Router>
+    <Router> 
       <Topbar />
       <div className="container">
         <Sidebar />
@@ -20,10 +20,8 @@ function App() {
           <Route path="/users" element={<UserList />}></Route>
           <Route path="/user" element={<User />}></Route>
           <Route path="/products" element={<ProductList/>}></Route>
-          <Route path="/report" element={<ImageUpload/>}></Route>
-          <Route path="/newProduct" element={<NewProduct/>}></Route>
-
-          
+          <Route path="/report" element={<UploadImage/>}></Route>
+          <Route path="/newProduct" element={<NewProduct/>}></Route> 
         </Routes>
       </div>
     </Router>

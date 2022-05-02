@@ -1,8 +1,12 @@
-from flask import Flask, Response, request, jsonify
+from flask import Flask, Response, request, jsonify , session
 import pymongo
 import json
 from bson.objectid import ObjectId
-import numpy as np
+import os
+import urllib.request
+from werkzeug.utils import secure_filename
+
+# import numpy as np
 # import cv2
 # from sklearn.model_selection import train_test_split
 # from sklearn.neighbors import KNeighborsClassifier
@@ -37,12 +41,6 @@ def create_user():
 ################################################################################
     if request.method == "POST":
         try:
-            # user = {"username": request.form["username"], 
-            #         "password": request.form["password"],
-            #         "email": request.form["email"],
-            #         "department": request.form["department"],
-            #         "position": request.form["position"],
-            #         }
             data = request.get_json()
             dbResponse = db.users.insert_one(data)
             return Response(response=json.dumps({
@@ -70,31 +68,89 @@ def create_user():
             print(ex)
             return Response(response=json.dumps({"message": "Cannot read users"}), status=500, mimetype="application/json")
 
-@app.route("/products", methods=["POST"])
+@app.route("/products", methods=["POST","GET"])
 def add_products():
 
 ###############################################################################
 # Product data Add 
 ################################################################################
-    try:
-        # user = {"username": request.form["username"], 
-        #         "password": request.form["password"],
-        #         "email": request.form["email"],
-        #         "department": request.form["department"],
-        #         "position": request.form["position"],
-        #         }
-        data = request.get_json()
-        dbResponse = db.products.insert_one(data)
-        return Response(response=json.dumps({
-            "message": "Products added",
-            "id": f"{dbResponse.inserted_id}"
-        }),
-                        status=200,
-                        mimetype="application/json")
+    if request.method == "POST":
+        try:
+            data = request.get_json()
+            dbResponse = db.products.insert_one(data)
+            return Response(response=json.dumps({
+                "message": "Products added",
+                "id": f"{dbResponse.inserted_id}"
+            }),
+                            status=200,
+                            mimetype="application/json")
 
-    except Exception as ex:
-        print(ex)
+        except Exception as ex:
+            print(ex)
+###############################################################################
+# Product data Retrive 
+################################################################################
+    if request.method == "GET":
+        try:
+            data = list(db.products.find())
+            for product in data:
+                product["_id"] = str(product["_id"])
+            return Response(response=json.dumps(data),
+                            status=200,
+                            mimetype="application/json")
 
+        except Exception as ex:
+            print(ex)
+            return Response(response=json.dumps({"message": "Cannot read products"}), status=500, mimetype="application/json")
+
+###############################################################################
+# Image Upload 
+################################################################################
+app.secret_key = "caircocoders-ednalan"
+ 
+UPLOAD_FOLDER = './uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+ 
+ALLOWED_EXTENSIONS = set(['jpg', 'jpeg'])
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    # check if the post request has the file part
+    if 'File' not in request.files:
+        resp = jsonify({'message' : 'No file part in the request'})
+        resp.status_code = 400
+        return resp
+ 
+    files = request.files.getlist('File')
+     
+    errors = {}
+    success = False
+     
+    for file in files:      
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            success = True
+        else:
+            errors[file.filename] = 'File type is not allowed'
+ 
+    if success and errors:
+        errors['message'] = 'File(s) successfully uploaded'
+        resp = jsonify(errors)
+        resp.status_code = 500
+        return resp
+    if success:
+        resp = jsonify({'message' : 'Files successfully uploaded'})
+        resp.status_code = 201
+        return resp
+    else:
+        resp = jsonify(errors)
+        resp.status_code = 500
+        return resp
 
 
 if __name__ == "__main__":
