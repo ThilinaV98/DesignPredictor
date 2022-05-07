@@ -1,4 +1,5 @@
 from flask import Flask, Response, request, jsonify, session, render_template
+import flask
 import pymongo
 import json
 from bson.objectid import ObjectId
@@ -84,20 +85,53 @@ def update_user(id):
     try:
         dbResponse = db.users.update_one(
             {"_id":ObjectId(id)},
-            {"$set":{"username":request.form["username"]}}
+            {"$set":{"username":request.form["username"]},
+            "$set":{"password":request.form["password"]},
+            "$set":{"email":request.form["email"]},
+            "$set":{"department":request.form["department"]},
+            "$set":{"position":request.form["position"]}
+            }
         )
         for attr in dir(dbResponse):
             print(f"******{attr}******")
-        return Response(response=json.dumps({
-                "message": "user updated"}),
-                            status=200,
-                            mimetype="application/json")
+        if dbResponse.modified_count == 1:
+            return Response(response=json.dumps({
+                    "message": "user updated"}),
+                                status=200,
+                                mimetype="application/json")
+        else:
+            return Response(response=json.dumps({
+                    "message": "nothing to update"}),
+                                status=200,
+                                mimetype="application/json")
+
     except Exception as ex:
         print(ex) 
         return Response(response=json.dumps({
                 "message": "user cannot updated"}),
                             status=500,
                             mimetype="application/json")
+
+###############################################################################
+# Get user details from ID
+################################################################################
+@app.route("/users/<uID>", methods=["GET"])
+def get_user(uID):
+
+        try:
+            data = db.users.find_one({'_id': ObjectId(uID)})
+            print(data)
+            return Response(response=json.dumps(data, default=str),
+                            status=200,
+                            mimetype="application/json")
+
+        except Exception as ex:
+            print(ex)
+            return Response(response=json.dumps({
+                "message": "Cannot read users"}), 
+                        status=500, 
+                        mimetype="application/json")
+                            
 ###############################################################################
 # Product data Add 
 ################################################################################
@@ -146,33 +180,45 @@ def update_products(id):
             "$set":{"img":request.form["img"]}
             }
         )
+        for attr in dir(dbResponse):
+            print(f"******{attr}******")
         if dbResponse.modified_count == 1:
-        # for attr in dir(dbResponse):
-        #     print(f"*****{attr}*****")
-            return Response(
-                response= json.dumps(
-                    {"message": "Product Updated"}),
-                status=200,
-                mimetype="application/json"
-            )
+            return Response(response=json.dumps({
+                    "message": "product updated"}),
+                                status=200,
+                                mimetype="application/json")
         else:
-            return Response(
-                response= json.dumps(
-                    {"message": "Nothing to Update"}),
-                status=200,
-                mimetype="application/json"
-            )            
-    except Exception as ex:
-        print("**********")
-        print(ex)
-        print("**********")
-        return Response(
-            response= json.dumps(
-                {"message": "Cannot Update Product"}),
-            status=500,
-            mimetype="application/json"
-        )
+            return Response(response=json.dumps({
+                    "message": "nothing to update"}),
+                                status=200,
+                                mimetype="application/json")
 
+    except Exception as ex:
+        print(ex) 
+        return Response(response=json.dumps({
+                "message": "product cannot updated"}),
+                            status=500,
+                            mimetype="application/json")
+
+###############################################################################
+# Get user details from ID
+################################################################################
+@app.route("/products/<pID>", methods=["GET"])
+def get_products(pID):
+
+        try:
+            data = db.products.find_one({'_id': ObjectId(pID)})
+            print(data)
+            return Response(response=json.dumps(data, default=str),
+                            status=200,
+                            mimetype="application/json")
+
+        except Exception as ex:
+            print(ex)
+            return Response(response=json.dumps({
+                "message": "Cannot read Product details"}), 
+                        status=500, 
+                        mimetype="application/json")
 ###############################################################################
 # Image Upload 
 ################################################################################
@@ -221,6 +267,9 @@ def upload_file():
         resp = jsonify(errors)
         resp.status_code = 500
         return resp
+
+
+
 
 
 if __name__ == "__main__":

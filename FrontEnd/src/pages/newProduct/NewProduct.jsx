@@ -4,11 +4,11 @@ import * as React from "react";
 
 function handleSubmit(e) {
   e.preventDefault();
-  const { id, quntity, price, img } = e.target.elements;
+  const { id, quantity, price, img } = e.target.elements;
   // console.log({ id: id.value, quntity: quntity.value, price: price.value, img: img.value});
   axios.post("http://localhost:5000/products", {
     id: id.value,
-    quntity: quntity.value,
+    quantity: quantity.value,
     price: price.value,
     img: img.value,
   });
@@ -36,11 +36,11 @@ export default function newProduct() {
               ></input>
             </div>
             <div className="newProductAddItem">
-              <label>Quntity</label>
+              <label>Quantity</label>
               <input
-                id="quntity"
+                id="quantity"
                 type="text"
-                placeholder="quntity"
+                placeholder="quantity"
                 className="newProductAddInputs"
               ></input>
             </div>

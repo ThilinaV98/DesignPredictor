@@ -5,7 +5,7 @@ function handleSubmit(e) {
   e.preventDefault();
   const { username, password, email, department, position} = e.target.elements;
   // console.log({ username: username.value, password: password.value, email: email.value, department: department.value, position: position.value });
-  axios.patch('http://localhost:5000//users/', {
+  axios.patch('http://localhost:5000/users/', {
     "username": username.value,
     "password": password.value,
     "email": email.value,

@@ -36,7 +36,7 @@ export default function UserList() {
       .then((result) => {
         setRows(result);
       });
-  });
+  }, []);
   return (
     <div className="userList">
       <div className="userListContainer">

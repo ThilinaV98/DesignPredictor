@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./productList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
-
+import { useLocation } from "react-router";
 const columns = [
   // { field: "_id", headerName: "ID", width: 70 },
   { field: "id", headerName: "ID", width: 70 },
@@ -15,7 +15,7 @@ const columns = [
     width: 130,
     renderCell: (params) => {
       return (
-        <><Link to={"/productUpdate?"}>
+        <><Link to={{pathname:"/products/" + params.row._id}}>
           <button className="productListEdit">Edit</button>
         </Link>
         <Link to="/productDelete">
@@ -28,13 +28,15 @@ const columns = [
 
 export default function ProductList(){
   let [rows, setRows] = useState({});
+  // console.log("this.rows::::::"+this.rows)
+
   useEffect(() => {
     fetch(`http://localhost:5000/products`)
       .then((res) => res.json())
       .then((result) => {
         setRows(result);
       });
-  });
+  }, []);
   return (
     <div className="productList">
       <div className="productListContainer">

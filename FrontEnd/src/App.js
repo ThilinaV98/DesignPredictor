@@ -31,7 +31,7 @@ function App() {
       .then((result) => {
         setDatabase(result);
       });
-  });
+  }, []);
 
   const errors = {
     uname: "invalid username",
@@ -112,7 +112,7 @@ function App() {
                 <Route path="/newProduct" element={<NewProduct />}></Route>
                 <Route path="/userUpdate" element={<UserUpdate />}></Route>
                 <Route
-                  path="/productUpdate"
+                  path="/products/:productId"
                   element={<ProductUpdate />}
                 ></Route>
               </Routes>
