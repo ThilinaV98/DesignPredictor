@@ -1,13 +1,11 @@
-import "./user.css";
+import "./userUpdate.css";
 import axios from 'axios';
 
 function handleSubmit(e) {
   e.preventDefault();
-  const { id, username, password, email, department, position} = e.target.elements;
+  const { username, password, email, department, position} = e.target.elements;
   // console.log({ username: username.value, password: password.value, email: email.value, department: department.value, position: position.value });
-  axios.post('http://localhost:5000/users', {
-    
-    "id" :id.value,
+  axios.patch('http://localhost:5000//users/', {
     "username": username.value,
     "password": password.value,
     "email": email.value,
@@ -17,73 +15,65 @@ function handleSubmit(e) {
   })
 }
 
-export default function User() {
+export default function UserUpdate() {
+
   return (
     <div className="user">
-      <div className="userTitleContainer">Add User</div>
-      <div className="userAdd">
-        <span className="userAddTitle">Edit Details</span>
-        <form className="userAddForm" onSubmit={handleSubmit} action="POST">
-          <div className="userAddLeft">
-            <div className="userAddItem">
-              <label>Id</label>
-              <input
-                id="id"
-                type="text"
-                placeholder="id"
-                className="userAddInputs"
-              ></input>
-            </div>
-            <div className="userAddItem">
+      <div className="userTitleContainer">Update User</div>
+      <div className="userUpdate">
+        <span className="userUpdateTitle">Edit Details</span>
+        <form className="userUpdateForm" onSubmit={handleSubmit} action="PATCH">
+          <div className="userUpdateLeft">
+            <div className="userUpdateItem">
               <label>Username</label>
               <input
                 id="username"
                 type="text"
                 placeholder="username"
-                className="userAddInputs"
+                className="userUpdateInputs"
               ></input>
             </div>
-            <div className="userAddItem">
+            <div className="userUpdateItem">
               <label>Password</label>
               <input
                 id="password"
                 type="password"
                 placeholder="password"
-                className="userAddInputs"
+                className="userUpdateInputs"
               ></input>
             </div>
-            <div className="userAddItem">
+            <div className="userUpdateItem">
               <label>Email</label>
               <input
                 id="email"
                 type="text"
                 placeholder="email"
-                className="userAddInputs"
+                className="userUpdateInputs"
               ></input>
             </div>
-            <div className="userAddItem">
+            <div className="userUpdateItem">
               <label>Department</label>
               <input
                 id="department"
                 type="text"
                 placeholder="department"
-                className="userAddInputs"
+                className="userUpdateInputs"
               ></input>
             </div>
-            <div className="userAddItem">
+            <div className="userUpdateItem">
               <label>Position</label>
               <input
                 id="position"
                 type="text"
                 placeholder="position"
-                className="userAddInputs"
+                className="userUpdateInputs"
               ></input>
             </div>
           </div>
-          <div className="userAddRight">
-            <div className="userAddItem"></div>
-            <button type="submit" className="userAddButton" onClick={() => (alert("User added successfully !")
-              )}>Add User</button>
+          <div className="userUpdateRight">
+            <div className="userUpdateItem"></div>
+            <button type="submit" className="userUpdateButton" onClick={() => (alert("User updated successfully !")
+              )}>Update User</button>
           </div>
         </form>
       </div>

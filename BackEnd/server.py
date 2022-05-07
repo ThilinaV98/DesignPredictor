@@ -1,4 +1,4 @@
-from flask import Flask, Response, request, jsonify , session
+from flask import Flask, Response, request, jsonify, session, render_template
 import pymongo
 import json
 from bson.objectid import ObjectId
@@ -19,9 +19,9 @@ from werkzeug.utils import secure_filename
 
 #UNCOMMENT THESE FILES WHEN DATAMODEL IS WORKING PROPERLY
 # from ML.DataModel import DataModel
+# app.register_blueprint(DataModel,url_prefix="/ml")
 
 app = Flask(__name__)
-# app.register_blueprint(DataModel,url_prefix="/ml")
 
 try:
     mongo = pymongo.MongoClient(host="localhost",
@@ -32,13 +32,18 @@ try:
 except:
     print("Error - Cannot connecrt to the db ")
 
+###############################################################################
+# User log in  
+###############################################################################
+
+
+###############################################################################
+# User data Add 
+###############################################################################
 
 @app.route("/users", methods=["POST","GET"])
 def create_user():
 
-###############################################################################
-# User data Add 
-################################################################################
     if request.method == "POST":
         try:
             data = request.get_json()
@@ -54,7 +59,7 @@ def create_user():
             print(ex)
 ###############################################################################
 # User data Retrive 
-################################################################################
+###############################################################################
     if request.method == "GET":
         try:
             data = list(db.users.find())
@@ -66,14 +71,39 @@ def create_user():
 
         except Exception as ex:
             print(ex)
-            return Response(response=json.dumps({"message": "Cannot read users"}), status=500, mimetype="application/json")
+            return Response(response=json.dumps({
+                "message": "Cannot read users"}), 
+                        status=500, 
+                        mimetype="application/json")
 
-@app.route("/products", methods=["POST","GET"])
-def add_products():
-
+###############################################################################
+# User data Update 
+###############################################################################
+@app.route("/users/<id>", methods=["PATCH"])
+def update_user(id):
+    try:
+        dbResponse = db.users.update_one(
+            {"_id":ObjectId(id)},
+            {"$set":{"username":request.form["username"]}}
+        )
+        for attr in dir(dbResponse):
+            print(f"******{attr}******")
+        return Response(response=json.dumps({
+                "message": "user updated"}),
+                            status=200,
+                            mimetype="application/json")
+    except Exception as ex:
+        print(ex) 
+        return Response(response=json.dumps({
+                "message": "user cannot updated"}),
+                            status=500,
+                            mimetype="application/json")
 ###############################################################################
 # Product data Add 
 ################################################################################
+@app.route("/products", methods=["POST","GET"])
+def add_products():
+
     if request.method == "POST":
         try:
             data = request.get_json()
@@ -102,6 +132,46 @@ def add_products():
         except Exception as ex:
             print(ex)
             return Response(response=json.dumps({"message": "Cannot read products"}), status=500, mimetype="application/json")
+
+###############################################################################
+# Product data Update 
+###############################################################################
+@app.route("/products/<id>", methods=["PATCH"])
+def update_products(id):
+    try:
+        dbResponse = db.products.update_one(
+            {"_id":ObjectId(id)},
+            {"$set":{"quantity":request.form["quantity"]},
+            "$set":{"price":request.form["price"]},
+            "$set":{"img":request.form["img"]}
+            }
+        )
+        if dbResponse.modified_count == 1:
+        # for attr in dir(dbResponse):
+        #     print(f"*****{attr}*****")
+            return Response(
+                response= json.dumps(
+                    {"message": "Product Updated"}),
+                status=200,
+                mimetype="application/json"
+            )
+        else:
+            return Response(
+                response= json.dumps(
+                    {"message": "Nothing to Update"}),
+                status=200,
+                mimetype="application/json"
+            )            
+    except Exception as ex:
+        print("**********")
+        print(ex)
+        print("**********")
+        return Response(
+            response= json.dumps(
+                {"message": "Cannot Update Product"}),
+            status=500,
+            mimetype="application/json"
+        )
 
 ###############################################################################
 # Image Upload 

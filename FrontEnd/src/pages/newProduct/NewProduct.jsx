@@ -17,7 +17,7 @@ function handleSubmit(e) {
 export default function newProduct() {
   return (
     <div className="newProduct">
-      <div className="newProductTitleContainer">Add User</div>
+      <div className="newProductTitleContainer">Add Products</div>
       <div className="newProductAdd">
         <span className="newProductAddTitle">Edit Details</span>
         <form

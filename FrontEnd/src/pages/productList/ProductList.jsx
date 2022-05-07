@@ -9,6 +9,21 @@ const columns = [
   { field: "quantity", headerName: "Quantity", width: 130 },
   { field: "price", headerName: "Price", width: 130 },
   { field: "img", headerName: "Image", width: 130 },
+  {
+    field: "action",
+    headerName: "action",
+    width: 130,
+    renderCell: (params) => {
+      return (
+        <><Link to={"/productUpdate?"}>
+          <button className="productListEdit">Edit</button>
+        </Link>
+        <Link to="/productDelete">
+            <button className="productListDelete">Delete</button>
+          </Link></>
+      );
+    },
+  }
 ];
 
 export default function ProductList(){

@@ -1,0 +1,64 @@
+.productUpdate{
+    flex: 4;
+    padding: 20px;
+  }
+  
+  .productUpdateTitleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 34px;
+  }
+  
+  .productUpdateAdd {
+    margin-top: 20px;
+    flex: 4;
+    padding: 20px;
+    -webkit-box-shadow: 2px 1px 5px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 1px 5px 0px rgba(0, 0, 0, 0.5);
+  }
+  .productUpdateAddTitle {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  .productUpdateAddForm {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .productUpdateAddItem{
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+  }
+  
+  .productUpdateAddItem>label{
+      margin-bottom: 5px;
+      font-size: 14px;
+  }
+  
+  .productUpdateAddInputs{
+      border: none;
+      width: 250px;
+      height: 30px;
+      border-bottom: 1px solid gray;
+  }
+  
+  .productUpdateAddRight{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  
+  .productUpdateAddButton{
+      border-radius: 5px;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      background-color: blue;
+      color: white;
+      font-weight: 600;
+  }

@@ -1,5 +1,6 @@
 import "./login.css";
 import axios from 'axios';
+import {useNavigate } from "react-router-dom"
 
 function handleSubmit(e) {
   e.preventDefault();
@@ -15,7 +16,10 @@ function handleSubmit(e) {
   })
 }
 
-export default function Login() {
+function Login() {
+
+  let navigate = useNavigate ();
+  // navigate('/home');
   return (
     <div className="login">
       <div className="loginTitleContainer">Login User</div>
@@ -44,10 +48,13 @@ export default function Login() {
           </div>
           <div className="loginUserRight">
             <div className="loginUserItem"></div>
-            <button type="submit" className="loginUserButton">Login</button>
+            <button type="submit" className="loginUserButton" onClick={() => {
+              navigate("/home");
+            }}>Login</button>
           </div>
         </form>
       </div>
     </div>
   );
 }
+export default Login;

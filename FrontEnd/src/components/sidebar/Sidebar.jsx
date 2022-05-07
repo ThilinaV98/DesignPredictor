@@ -35,14 +35,14 @@ export default function Sidebar() {
             </Link>
           </ul>
         </div>
-        <div className="sidebarMenu">
+        {/* <div className="sidebarMenu">
           <h3 className="sidebarTitle">Staff</h3>
           <ul className="sidebarList">
             <Link to="/user" className="link">
               <li className="sidebarListItem">Manage</li>
             </Link>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );

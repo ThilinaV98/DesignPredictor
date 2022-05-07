@@ -32,7 +32,7 @@ export default function uploadImage() {
           </form>
       </div>
       <div>
-        Search Result
+        {/* Search Result */}
       </div>
     </div>
   );

@@ -5,12 +5,28 @@ import { Link } from "react-router-dom";
 // import axios from "axios";
 
 const columns = [
-  { field: "_id", headerName: "ID", width: 70 },
+  { field: "id", headerName: "ID", width: 70 },
   { field: "username", headerName: "User name", width: 130 },
   { field: "email", headerName: "Email", width: 230 },
   { field: "department", headerName: "Department", width: 130 },
   { field: "position", headerName: "Position", width: 130 },
+  {
+    field: "action",
+    headerName: "action",
+    width: 130,
+    renderCell: (params) => {
+      return (
+        <><Link to={"/userUpdate"}>
+          <button className="userListEdit">Edit</button>
+        </Link><Link to="/userDelete">
+            <button className="userListDelete">Delete</button>
+          </Link></>
+        // <button className="userListDelet">Delete</button>
+      );
+    },
+  },
 ];
+
 
 export default function UserList() {
   let [rows, setRows] = useState({});

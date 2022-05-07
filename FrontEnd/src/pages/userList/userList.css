@@ -12,7 +12,7 @@
     font-size: 24px;
     font-weight: 600;
 }
-.userListButton{
+.userListButton , .userListEdit{
     border-radius: 5px;
     border: none;
     padding: 5px;
@@ -20,4 +20,14 @@
     background-color: blue;
     color: white;
     font-weight: 600;
+}
+.userListDelete{
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    font-weight: 600;
+    margin-left: 10px;
 }
