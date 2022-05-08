@@ -19,11 +19,11 @@ from werkzeug.utils import secure_filename
 
 
 #UNCOMMENT THESE FILES WHEN DATAMODEL IS WORKING PROPERLY
-# from ML.DataModel import DataModel
+from ML.DataModel import DataModel
 
 
 app = Flask(__name__)
-# app.register_blueprint(DataModel,url_prefix="/ml")
+app.register_blueprint(DataModel,url_prefix="/ml")
 try:
     mongo = pymongo.MongoClient(host="localhost",
                                 port=27017,
