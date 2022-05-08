@@ -20,7 +20,9 @@ from werkzeug.utils import secure_filename
 
 #UNCOMMENT THESE FILES WHEN DATAMODEL IS WORKING PROPERLY
 from ML.DataModel import DataModel
+# from ML.DataModel.DataModel import data_modelling
 
+import ML.DataModel as dml
 
 app = Flask(__name__)
 app.register_blueprint(DataModel,url_prefix="/ml")
@@ -252,6 +254,7 @@ def upload_file():
         resp.status_code = 500
         return resp
     if success:
+        dml.data_modelling()
         resp = jsonify({'message' : 'Files successfully uploaded'})
         resp.status_code = 201
         return resp
