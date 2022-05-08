@@ -18,9 +18,9 @@ DataSet=os.path.join(current_app.root_path, 'ML\\Dataset');
 data_path=DataSet
 
 @DataModel.route("/DataModel")
-def DataModelling():
-    DataSetCreation();
-    DataTraining();
+def data_modelling():
+    # DataSetCreation();
+    # DataTraining();
     return "DataModelling is Copleted!"
 
 

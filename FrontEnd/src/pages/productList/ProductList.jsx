@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./productList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router";
+// import { useLocation } from "react-router";
 const columns = [
   // { field: "_id", headerName: "ID", width: 70 },
   { field: "id", headerName: "ID", width: 70 },

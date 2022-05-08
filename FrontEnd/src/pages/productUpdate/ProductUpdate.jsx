@@ -1,6 +1,7 @@
 import "./productUpdate.css";
 import { useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function ProductUpdate() {
   let [row, setRows] = useState({});
@@ -14,16 +15,15 @@ export default function ProductUpdate() {
       .then((result) => {
         setRows(result);
       });
-  }, []);
+  }, [productId]);
   function handleSubmit(e) {
-    // e.preventDefault();
-    // const {quantity, price, img } = e.target.elements;
-    // // console.log({ id: id.value, quntity: quntity.value, price: price.value, img: img.value});
-    // axios.post(`http://localhost:5000/products/${productId}`, {
-    //   quantity: quantity.value,
-    //   price: price.value,
-    //   img: img.value,
-    // });
+    e.preventDefault();
+    const {quantity, price, img } = e.target.elements;
+    axios.patch(`http://localhost:5000/products/${productId}`, {
+      quantity: quantity.value,
+      price: price.value,
+      img: img.value,
+    });
   }
   return (
     <div className="productUpdate">

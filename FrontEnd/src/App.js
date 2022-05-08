@@ -10,7 +10,6 @@ import UploadImage from "./pages/uploadlimage/UploadImage";
 import NewProduct from "./pages/newProduct/NewProduct";
 import UserUpdate from "./pages/userUpdate/UserUpdate";
 import ProductUpdate from "./pages/productUpdate/ProductUpdate";
-import Login from "./pages/login/Login";
 import "./app.css";
 // ###############################################################
 
@@ -70,29 +69,6 @@ function App() {
       <div className="error">{errorMessages.message}</div>
     );
 
-  // JSX code for login form
-  // const renderForm = (
-  //   <div className="form">
-  //     <div className="title">Login</div>
-  //     <form onSubmit={handleSubmit}>
-  //       <div className="input-container">
-  //         <label>Username </label>
-  //         <input type="text" name="uname" required />
-  //         {renderErrorMessage("uname")}
-  //       </div>
-  //       <div className="input-container">
-  //         <label>Password </label>
-  //         <input type="password" name="pass" required />
-  //         {renderErrorMessage("pass")}
-  //       </div>
-  //       <div className="button-container">
-  //         {/* <input type="submit" /> */}
-  //         <button type="submit" onClick={() => (alert("User login successfully !")
-  //             )}>Login</button>
-  //       </div>
-  //     </form>
-  //   </div>
-  // );
 
   return (
     // <div className="app">

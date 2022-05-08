@@ -20,10 +20,10 @@ from werkzeug.utils import secure_filename
 
 #UNCOMMENT THESE FILES WHEN DATAMODEL IS WORKING PROPERLY
 # from ML.DataModel import DataModel
-# app.register_blueprint(DataModel,url_prefix="/ml")
+
 
 app = Flask(__name__)
-
+# app.register_blueprint(DataModel,url_prefix="/ml")
 try:
     mongo = pymongo.MongoClient(host="localhost",
                                 port=27017,
@@ -84,7 +84,7 @@ def create_user():
 def update_user(id):
     try:
         dbResponse = db.users.update_one(
-            {"_id":ObjectId(id)},
+            {" _id":ObjectId(id)},
             {"$set":{"username":request.form["username"]},
             "$set":{"password":request.form["password"]},
             "$set":{"email":request.form["email"]},
@@ -94,24 +94,16 @@ def update_user(id):
         )
         for attr in dir(dbResponse):
             print(f"******{attr}******")
-        if dbResponse.modified_count == 1:
-            return Response(response=json.dumps({
-                    "message": "user updated"}),
-                                status=200,
-                                mimetype="application/json")
-        else:
-            return Response(response=json.dumps({
-                    "message": "nothing to update"}),
-                                status=200,
-                                mimetype="application/json")
-
+        return Response(response=json.dumps({
+                "message": "user updated"}),
+                            status=200,
+                            mimetype="application/json")
     except Exception as ex:
         print(ex) 
         return Response(response=json.dumps({
                 "message": "user cannot updated"}),
                             status=500,
                             mimetype="application/json")
-
 ###############################################################################
 # Get user details from ID
 ################################################################################
